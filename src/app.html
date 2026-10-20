@@ -1,0 +1,88 @@
+<div id="app">
+  <div id="header">
+    <h1 id="headline">Cardiogenic shock simulator</h1>
+    <button id="btn-run" class="runbtn paused" title="Start / pause patient time (space)"><span class="ico">&#9654;</span><span class="txt">Paused</span></button>
+    <button id="btn-control" class="ctl" title="Open the presenter control panel in a popup (c). Shift+click for the in-window drawer">Control panel</button>
+  </div>
+  <div id="tiles">
+    <div class="tile hr"><div class="lbl">HR</div><div class="val" id="t-hr">--</div><div class="sub" id="t-hr-sub"></div></div>
+    <div class="tile bp"><div class="lbl" id="t-bp-lbl">BP</div><div class="val" id="t-bp">--/--</div><div class="sub" id="t-bp-sub"></div></div>
+    <div class="tile rr"><div class="lbl">RR</div><div class="val" id="t-rr">--</div><div class="sub" id="t-rr-sub"></div></div>
+    <div class="tile spo2"><div class="lbl" id="t-spo2-lbl">SpO2</div><div class="val" id="t-spo2">--</div><div class="sub" id="t-spo2-sub"></div></div>
+    <div class="tile gcs"><div class="lbl">GCS</div><div class="val" id="t-gcs">--</div><div class="sub" id="t-gcs-sub"></div></div>
+    <div class="tile lac"><div class="lbl">Lactate</div><div class="val" id="t-lac">--</div><div class="sub" id="t-lac-sub"></div></div>
+  </div>
+  <div id="tabs">
+    <button data-tab="obs" class="active">Obs</button>
+    <button data-tab="ecg">12 lead</button>
+    <button data-tab="abg">ABG</button>
+    <button data-tab="echo">Echo</button>
+    <button data-tab="exam">Exam</button>
+    <button data-tab="hist">History</button>
+    <div class="spacer"></div>
+    <div id="clock">Patient time <b id="clk-pt">--:--</b> <span id="clk-el">(+0 min)</span> <span class="ff" id="clk-ff"></span></div>
+  </div>
+  <div id="views">
+    <div id="banner"></div>
+
+    <div id="view-obs" class="view active">
+      <div id="mon">
+        <div id="mon-top">
+          <span class="bed">Resus 2</span><span id="mon-pt">--</span><span id="mon-age"></span>
+          <span id="mon-clock">--:--</span>
+          <span class="alarm none" id="mon-alarm">No alarms</span>
+        </div>
+        <div id="mon-main">
+          <div class="wave"><canvas id="w-ecg"></canvas><div class="tag" style="color:var(--mono-ecg)">II <small>x1  25 mm/s</small></div></div>
+          <div class="num hr"><div class="lbl">HR <small>bpm</small></div><div class="lim">120<br>50</div><div class="big" id="n-hr">--</div><div class="sm" id="n-rhythm"></div></div>
+
+          <div class="wave"><canvas id="w-pleth"></canvas><div class="tag" style="color:var(--mono-spo2)">Pleth</div></div>
+          <div class="num spo2"><div class="lbl">SpO2 <small>%</small></div><div class="lim">100<br>90</div><div class="big" id="n-spo2">--</div><div class="sm" id="n-pi">PI --</div></div>
+
+          <div class="wave" id="row-bp"><canvas id="w-art"></canvas><div class="tag" id="w-art-tag" style="color:var(--mono-art)">Art <small id="w-art-scale">0 - 150</small></div><div id="nibp-pad"><div>NIBP</div><div class="sm" id="nibp-pad-sub">Auto, 5 min</div></div></div>
+          <div class="num nibp" id="n-bp"><div class="lbl" id="n-bp-lbl">NIBP <small>mmHg</small></div><div class="lim">160<br>90</div><div class="mid" id="n-bp-val">---/--</div><div class="sm" id="n-bp-sub">--:--</div></div>
+
+          <div class="wave" id="row-cvp"><canvas id="w-cvp"></canvas><div class="tag" style="color:var(--mono-cvp)">CVP <small id="w-cvp-scale">0 - 20</small></div></div>
+          <div class="num cvp" id="n-cvp-box"><div class="lbl">CVP <small>mmHg</small></div><div class="lim">12<br>2</div><div class="pair"><div class="big" id="n-cvp">--</div><div class="ppv"><div class="lbl">PPV <small>%</small></div><div class="mid" id="n-ppv">--</div></div></div><div class="sm" id="n-cvp-sub"></div></div>
+
+          <div class="wave"><canvas id="w-resp"></canvas><div class="tag" id="w-resp-tag" style="color:var(--mono-resp)">Resp</div></div>
+          <div class="num resp"><div class="lbl" id="n-rr-lbl">Resp <small>rpm</small></div><div class="lim">30<br>8</div><div class="big" id="n-rr">--</div><div class="sm" id="n-temp">T --.-</div></div>
+        </div>
+        <div id="mon-bot"><span>Main Menu</span><span>Alarm Setup</span><span>Alarm Reset</span><span>Review</span><span>NIBP Start</span><span>Zero IBP</span><span>Freeze</span><span>Standby</span></div>
+      </div>
+      <div id="exam-panel">
+        <div class="exbox"><div class="lbl">Alertness</div><div class="val" id="ex-alert">--</div></div>
+        <div class="exbox"><div class="lbl">Chest rise and fall</div><div class="val" id="ex-chest">--</div></div>
+        <div class="exbox"><div class="lbl">Lung sounds</div><div class="val" id="ex-lungs">--</div></div>
+        <div class="exbox"><div class="lbl">Pulse</div><div class="val" id="ex-pulse">--</div></div>
+        <div class="exbox"><div class="lbl">Capillary refill</div><div class="val" id="ex-crt">--</div></div>
+        <div class="exbox"><div class="lbl">Peripheries</div><div class="val" id="ex-periph">--</div></div>
+        <div class="exbox"><div class="lbl">Temperature</div><div class="val" id="ex-temp">--</div></div>
+        <div class="exbox"><div class="lbl">Skin</div><div class="val" id="ex-skin">--</div></div>
+        <div class="exbox"><div class="lbl">Central cyanosis</div><div class="val" id="ex-cyan">--</div></div>
+        <div class="exbox"><div class="lbl">Urine output</div><div class="val" id="ex-urine">--</div></div>
+      </div>
+    </div>
+
+    <div id="view-ecg" class="view">
+      <div id="ecg-head"><span id="ecg-h-pt"></span><span id="ecg-h-time"></span><span>Rate <b id="ecg-h-rate">--</b></span><span>PR <b id="ecg-h-pr">--</b></span><span>QRS <b id="ecg-h-qrs">--</b></span><span>QT/QTc <b id="ecg-h-qt">--</b></span><span>Axis <b id="ecg-h-axis">--</b></span><span style="margin-left:auto">25 mm/s  10 mm/mV  0.05-150 Hz</span></div>
+      <div id="ecg-wrap"><div id="ecg-empty">No 12 lead acquired yet</div><canvas id="ecg12" style="display:none"></canvas></div>
+    </div>
+
+    <div id="view-abg" class="view"><div id="abg-empty">No blood gas yet</div></div>
+
+    <div id="view-echo" class="view">
+      <div id="echo-media"><div id="echo-empty">No echo yet</div></div>
+      <div id="echo-side">
+        <div id="echo-views"></div>
+        <div class="card" id="echo-findings"><h3>Findings</h3><ul></ul></div>
+        <div class="card" id="echo-measures"><h3>Measurements</h3><table></table></div>
+      </div>
+    </div>
+
+    <div id="view-exam" class="view cards"></div>
+    <div id="view-hist" class="view cards"></div>
+  </div>
+</div>
+<div id="drawer"></div>
+<div id="hint">Press C for the control panel (popup), Shift+C for the in-window drawer, space to start/pause, 1-6 tabs</div>
