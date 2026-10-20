@@ -1,6 +1,14 @@
+# DO NOT USE FOR TRAINING
+
+> **THIS IS AN ILLUSTRATIVE DEMONSTRATION BUILT FOR A SINGLE TALK.**
+>
+> **The physiology is a simplified, unvalidated model. Drug doses, timings, responses, waveforms, echo findings and transfer logistics are illustrative and may be wrong.**
+>
+> **Do not use it to train or assess clinicians, and never to inform patient care. No warranty of any kind.**
+
 # Cardiogenic shock patient simulator
 
-Single-file teaching simulator for a talk on cardiogenic shock after ACS. Open `cs-sim.html` in Chrome. No server, no dependencies.
+Single-file teaching simulator for a talk on cardiogenic shock after ACS. Open `cs-sim.html` in Chrome. No server, no dependencies. A disclaimer dialog shows on every start; `?ack=1` in the URL skips it (used by the headless tests).
 
 ## Running a session
 

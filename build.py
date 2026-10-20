@@ -27,6 +27,17 @@ def main():
     js_files = ["wave.js", "engine.js", "drugs.js", "scenarios.js", "views.js", "echo.js", "control.js", "main.js"]
     js = "\n\n".join(f"// ---- {n} ----\n" + read(SRC / n) for n in js_files)
     html = f"""<!doctype html>
+<!--
+  ============================================================================
+  DO NOT USE FOR TRAINING
+
+  Illustrative demonstration built for a single talk. The physiology is a
+  simplified, unvalidated model. Drug doses, timings, responses, waveforms,
+  echo findings and transfer logistics are illustrative and may be wrong.
+  Do not use it to train or assess clinicians, and never to inform patient
+  care. No warranty of any kind.
+  ============================================================================
+-->
 <html lang="en">
 <head>
 <meta charset="utf-8">

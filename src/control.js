@@ -274,6 +274,7 @@ function resetTest() {
 window.addEventListener('DOMContentLoaded', () => {
   Views.init(sim);
   const q = new URLSearchParams(location.search);
+  if (q.has('ack')) document.getElementById('disclaimer').remove();
   sim.load(q.get('scenario') || SCENARIOS[0].id);
   if (q.get('tab')) Views.setTab(q.get('tab'));
   if (q.get('echo')) sim.acquireEcho();

@@ -1,4 +1,15 @@
 <!doctype html>
+<!--
+  ============================================================================
+  DO NOT USE FOR TRAINING
+
+  Illustrative demonstration built for a single talk. The physiology is a
+  simplified, unvalidated model. Drug doses, timings, responses, waveforms,
+  echo findings and transfer logistics are illustrative and may be wrong.
+  Do not use it to train or assess clinicians, and never to inform patient
+  care. No warranty of any kind.
+  ============================================================================
+-->
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -163,6 +174,13 @@ button.ctl:hover { border-color: var(--mint); color: var(--mint); }
 #drawer.open { transform: none; }
 #hint { position: fixed; left: 12px; bottom: 6px; font-size: 12px; color: #456; }
 
+/* ---------- Start-up disclaimer ---------- */
+#disclaimer { position: fixed; inset: 0; background: rgba(5, 10, 18, 0.92); z-index: 100; display: flex; align-items: center; justify-content: center; }
+#disclaimer .box { max-width: 900px; margin: 24px; padding: 40px 48px; background: #1a0a0a; border: 4px solid var(--coral); border-radius: 12px; text-align: center; }
+#disclaimer h2 { margin: 0 0 24px; font-size: 56px; letter-spacing: 2px; color: var(--coral); }
+#disclaimer p { font-size: 24px; line-height: 1.4; margin: 0 0 18px; }
+#disclaimer button { margin-top: 12px; padding: 14px 40px; font-size: 24px; font-weight: 700; background: var(--coral); color: #1a0a0a; border: 0; border-radius: 8px; cursor: pointer; }
+
 </style>
 </head>
 <body>
@@ -254,6 +272,14 @@ button.ctl:hover { border-color: var(--mint); color: var(--mint); }
 </div>
 <div id="drawer"></div>
 <div id="hint">Press C for the control panel (popup), Shift+C for the in-window drawer, space to start/pause, 1-6 tabs</div>
+<div id="disclaimer">
+  <div class="box">
+    <h2>DO NOT USE FOR TRAINING</h2>
+    <p>This is an illustrative demonstration built for a single talk. The physiology is a simplified, unvalidated model. Drug doses, timings, responses, waveforms, echo findings and transfer logistics are illustrative and may be wrong.</p>
+    <p>Do not use it to train or assess clinicians, and never to inform patient care.</p>
+    <button onclick="document.getElementById('disclaimer').remove()">I understand</button>
+  </div>
+</div>
 
 <script>
 const ASSETS = {
@@ -1992,6 +2018,7 @@ function resetTest() {
 window.addEventListener('DOMContentLoaded', () => {
   Views.init(sim);
   const q = new URLSearchParams(location.search);
+  if (q.has('ack')) document.getElementById('disclaimer').remove();
   sim.load(q.get('scenario') || SCENARIOS[0].id);
   if (q.get('tab')) Views.setTab(q.get('tab'));
   if (q.get('echo')) sim.acquireEcho();
